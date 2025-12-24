@@ -179,7 +179,7 @@
 
         // Hiệu ứng hào quang cây
         gsap.to("#tree", {
-            filter: "drop-shadow(0 0 15px rgba(255,255,255,0.5))",
+            filter: "drop-shadow(0 0 60px rgba(255, 215, 0, 0.8))",
             duration: 2,
             repeat: -1,
             yoyo: true,
@@ -190,4 +190,41 @@
         typeWriter();
     });
 
+    // ==========================================
+    // TẠO HIỆU ỨNG TUYẾT RƠI (BẢN NHIỀU TUYẾT)
+    // ==========================================
+    (function createSnow() {
+        // Kiểm tra xem đã có container chưa, nếu chưa mới tạo
+        if(document.querySelector('.snow-container')) return;
+
+        const snowContainer = document.createElement('div');
+        snowContainer.className = 'snow-container';
+        document.body.appendChild(snowContainer);
+
+        // --- SỬA SỐ NÀY ĐỂ TĂNG GIẢM TUYẾT ---
+        const totalSnowflakes = 500; // Sửa 50 thành 200 (hoặc 300 nếu muốn dày đặc hơn)
+        // -------------------------------------
+
+        for (let i = 0; i < totalSnowflakes; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            
+            // Random vị trí ngang
+            snowflake.style.left = Math.random() * 100 + '%';
+            
+            // Random thời gian trễ để tuyết không rơi cùng lúc
+            snowflake.style.animationDelay = Math.random() * 10 + 's';
+            
+            // Random độ mờ (có bông rõ, bông mờ)
+            snowflake.style.opacity = Math.random(); 
+            
+            // Random kích thước bằng JS để trông tự nhiên hơn
+            // (Tạo bông to nhỏ từ 2px đến 7px)
+            const size = Math.random() * 5 + 2 + 'px';
+            snowflake.style.width = size;
+            snowflake.style.height = size;
+
+            snowContainer.appendChild(snowflake);
+        }
+    })();
 })();
