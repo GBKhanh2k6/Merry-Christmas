@@ -110,54 +110,76 @@ a:visited {
     100% { transform: scale(1); }
 }
 /* =========================================
-   HIỆU ỨNG TUYẾT RƠI TOÀN TRANG
+   HIỆU ỨNG TUYẾT RƠI (CODE CHO FILE .CSS)
+   - Không dùng GSAP
+   - Không dùng thư viện ngoài
 ========================================= */
+
+/* Khung bao ngoài */
 .snow-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    pointer-events: none; /* Quan trọng: Để chuột bấm xuyên qua tuyết được */
-    z-index: 9998; /* Nằm dưới nút bấm nhạc nhưng trên nền */
+    height: 100vh;
+    pointer-events: none; /* Quan trọng: để chuột click xuyên qua tuyết */
+    z-index: 9999; 
     overflow: hidden;
 }
 
+/* Bông tuyết cơ bản */
 .snowflake {
     position: absolute;
     top: -10px;
+    left: 0; /* Mặc định, sẽ được thay đổi bên dưới */
+    width: 5px;
+    height: 5px;
     background: white;
     border-radius: 50%;
     opacity: 0.8;
-    /* Hiệu ứng bóng mờ giúp tuyết trông mềm mại hơn */
-    box-shadow: 0 0 5px #fff;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     animation: snowfall linear infinite;
 }
 
-/* Kịch bản tuyết rơi */
+/* Kịch bản chuyển động rơi */
 @keyframes snowfall {
     0% {
         transform: translateY(-10vh) translateX(0);
         opacity: 1;
     }
     100% {
-        /* Rơi xuống đáy và hơi bay ngang */
-        transform: translateY(110vh) translateX(20px);
-        opacity: 0.2;
+        transform: translateY(110vh) translateX(20px); /* Rơi xuống đáy và bay ngang 1 chút */
+        opacity: 0;
     }
 }
 
-/* --- Tạo sự ngẫu nhiên cho các bông tuyết --- */
-/* Bông nhỏ, rơi chậm */
-.snowflake:nth-child(3n) { width: 3px; height: 3px; animation-duration: 15s; animation-delay: 1s;}
-/* Bông vừa, rơi vừa */
-.snowflake:nth-child(3n+1) { width: 5px; height: 5px; animation-duration: 10s; animation-delay: 2s;}
-/* Bông to, rơi nhanh hơn */
-.snowflake:nth-child(3n+2) { width: 7px; height: 7px; animation-duration: 7s; animation-delay: 0s;}
+/* --- TẠO SỰ NGẪU NHIÊN BẰNG CSS (Giả lập random) --- */
 
-/* Rải rác vị trí ngang */
-.snowflake:nth-child(5n) { left: 10%; }
-.snowflake:nth-child(5n+1) { left: 30%; }
-.snowflake:nth-child(5n+2) { left: 50%; }
-.snowflake:nth-child(5n+3) { left: 70%; }
-.snowflake:nth-child(5n+4) { left: 90%; }
+/* 1. Kích thước & Tốc độ rơi khác nhau */
+.snowflake:nth-child(3n) { 
+    width: 3px; height: 3px; 
+    animation-duration: 7s; 
+    opacity: 0.6;
+}
+.snowflake:nth-child(3n+1) { 
+    width: 6px; height: 6px; 
+    animation-duration: 10s; 
+    opacity: 0.9;
+}
+.snowflake:nth-child(3n+2) { 
+    width: 4px; height: 4px; 
+    animation-duration: 15s; /* Rơi chậm */
+}
+
+/* 2. Vị trí xuất hiện (Left) - Chia nhỏ để không bị thẳng hàng */
+.snowflake:nth-child(11n+1) { left: 5%; animation-delay: 0s; }
+.snowflake:nth-child(11n+2) { left: 15%; animation-delay: 2s; }
+.snowflake:nth-child(11n+3) { left: 25%; animation-delay: 4s; }
+.snowflake:nth-child(11n+4) { left: 35%; animation-delay: 1s; }
+.snowflake:nth-child(11n+5) { left: 45%; animation-delay: 3s; }
+.snowflake:nth-child(11n+6) { left: 55%; animation-delay: 5s; }
+.snowflake:nth-child(11n+7) { left: 65%; animation-delay: 0.5s; }
+.snowflake:nth-child(11n+8) { left: 75%; animation-delay: 2.5s; }
+.snowflake:nth-child(11n+9) { left: 85%; animation-delay: 1.5s; }
+.snowflake:nth-child(11n+10) { left: 95%; animation-delay: 3.5s; }
+.snowflake:nth-child(11n)     { left: 50%; animation-delay: 6s; }
