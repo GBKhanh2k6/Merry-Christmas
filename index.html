@@ -9,7 +9,12 @@
 </head>
 
 <body>
+<div id="start-overlay">
+    <h1>🎄 Nhấn vào màn hình để đón Giáng Sinh 🎄</h1>
+    <p>(Click to start)</p>
+</div>
 
+<div id="music-player"></div>
 
     <svg class="mainSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 800 600" >
         <defs>
@@ -87,71 +92,55 @@
   </span>
 </foreignObject>
 
-<div style="position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0;">
-    <iframe 
-        id="christmas-audio"
-        src="https://www.youtube.com/embed/kYv9lD_k98I?autoplay=1&loop=1&playlist=kYv9lD_k98I&controls=0&showinfo=0&mute=0&enablejsapi=1" 
-        width="1" 
-        height="1" 
-        frameborder="0" 
-        allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-    </iframe>
-</div>
-
-<div id="music-player" style="position:absolute; top:-9999px; left:-9999px;"></div>
-
 <script>
-    // 1. Tải thư viện YouTube API
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
+    // --- XỬ LÝ NHẠC YOUTUBE ---
     var player;
-    var audioStarted = false;
-
     function onYouTubeIframeAPIReady() {
         player = new YT.Player('music-player', {
             height: '0',
             width: '0',
             videoId: 'dDKas6_cX4c', // ID bài nhạc Last Christmas
             playerVars: {
-                'autoplay': 1,
-                'loop': 1,
-                'playlist': 'dDKas6_cX4c',
+                'autoplay': 0, // Tắt tự động chạy, đợi bấm nút
                 'controls': 0,
-                'showinfo': 0,
-                'origin': window.location.origin
+                'rel': 0,
+                'fs': 0,
+                'loop': 1,
+                'playlist': 'dDKas6_cX4c' // Để lặp lại được
             },
             events: {
-                'onReady': onPlayerReady
+                'onReady': function(event) {
+                    // Nhạc đã sẵn sàng
+                    console.log("Music Ready");
+                }
             }
         });
     }
 
-    function onPlayerReady(event) {
-        // Mặc định tắt tiếng để trình duyệt cho phép chạy nền trước
-        event.target.mute();
-        event.target.playVideo();
-    }
+    // Tải API YouTube
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // 2. Bắt sự kiện Click chuột để bật tiếng
-    document.addEventListener('click', function() {
-        if (player && !audioStarted) {
-            player.unMute();      // Bật tiếng
-            player.setVolume(100); // Âm lượng to nhất
-            player.playVideo();    // Đảm bảo video đang chạy
-            audioStarted = true;   // Đánh dấu là đã bật
-            
-            // (Tuỳ chọn) Hiển thị thông báo nhỏ là nhạc đã bật
-            var msg = document.getElementById('endMessage');
-            if(msg) {
-                msg.style.opacity = 1;
-                
-            }
+    // --- XỬ LÝ SỰ KIỆN BẤM CHUỘT ---
+    document.getElementById('start-overlay').addEventListener('click', function() {
+        var overlay = document.getElementById('start-overlay');
+        
+        // 1. Ẩn màn hình chờ
+        overlay.style.opacity = '0';
+        setTimeout(function() {
+            overlay.style.display = 'none';
+        }, 1000);
+
+        // 2. Bật nhạc (Bắt buộc phải unMute và play ở đây)
+        if (player) {
+            player.unMute();
+            player.setVolume(100);
+            player.playVideo();
         }
     });
+</script>
 </script>
         </svg>
         <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>

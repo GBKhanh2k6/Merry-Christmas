@@ -72,3 +72,40 @@ a:visited {
   pointer-events: none;
   filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
 }
+
+/* Màn hình chờ bấm chuột */
+#start-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000; /* Nền đen */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Luôn nằm trên cùng */
+    cursor: pointer;
+    transition: opacity 1s ease; /* Hiệu ứng mờ dần khi tắt */
+}
+
+#start-overlay h1 {
+    color: #fff;
+    font-family: 'Brush Script MT', cursive;
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    animation: pulseText 1.5s infinite;
+}
+
+#start-overlay p {
+    color: #ccc;
+    font-size: 18px;
+}
+
+@keyframes pulseText {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); text-shadow: 0 0 20px gold; }
+    100% { transform: scale(1); }
+}
