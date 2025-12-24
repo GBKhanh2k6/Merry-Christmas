@@ -1,0 +1,74 @@
+@font-face {
+  font-family: "mountains_of_christmasregular";
+  
+  src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff2")
+      format("woff2"),
+    url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/35984/mountainsofchristmas-webfont.woff")
+      format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  background-color: #151522;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body,
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+svg {
+  width: 90%;
+  height: 90%;
+  visibility: hidden;
+}
+
+foreignObject {
+  font-family: mountains_of_christmasregular;
+  font-size: 2rem;
+  text-anchor: middle;
+  text-align: center;
+  fill: #ffffff;
+  color: #ffffff;
+  opacity: 0;
+  letter-spacing: 1px;
+}
+
+.endMessage {
+  display: block;
+  width: 100%;
+  font-size: 2.4rem;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 6px 18px rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.05);
+  line-height: 1;
+}
+
+/* a {
+  text-decoration: underline dotted #ffffff;
+}
+
+a:visited {
+  color: red;
+} */
+
+.endMessage {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.treeHalo {
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.35))
+          drop-shadow(0 0 16px rgba(255,255,255,0.2));
+}
+.particle {
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,0.6));
+}
