@@ -190,41 +190,74 @@
         typeWriter();
     });
 
-    // ==========================================
-    // TẠO HIỆU ỨNG TUYẾT RƠI (BẢN NHIỀU TUYẾT)
-    // ==========================================
-    (function createSnow() {
-        // Kiểm tra xem đã có container chưa, nếu chưa mới tạo
-        if(document.querySelector('.snow-container')) return;
 
-        const snowContainer = document.createElement('div');
-        snowContainer.className = 'snow-container';
-        document.body.appendChild(snowContainer);
-
-        // --- SỬA SỐ NÀY ĐỂ TĂNG GIẢM TUYẾT ---
-        const totalSnowflakes = 500; // Sửa 50 thành 200 (hoặc 300 nếu muốn dày đặc hơn)
-        // -------------------------------------
-
-        for (let i = 0; i < totalSnowflakes; i++) {
-            const snowflake = document.createElement('div');
-            snowflake.className = 'snowflake';
-            
-            // Random vị trí ngang
-            snowflake.style.left = Math.random() * 100 + '%';
-            
-            // Random thời gian trễ để tuyết không rơi cùng lúc
-            snowflake.style.animationDelay = Math.random() * 10 + 's';
-            
-            // Random độ mờ (có bông rõ, bông mờ)
-            snowflake.style.opacity = Math.random(); 
-            
-            // Random kích thước bằng JS để trông tự nhiên hơn
-            // (Tạo bông to nhỏ từ 2px đến 7px)
-            const size = Math.random() * 5 + 2 + 'px';
-            snowflake.style.width = size;
-            snowflake.style.height = size;
-
-            snowContainer.appendChild(snowflake);
+(function() {
+    // 1. Tự động chèn CSS (Để bạn đỡ phải sửa file CSS)
+    var css = `
+        .snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none; /* Quan trọng: để không chặn chuột click */
+            z-index: 99999;
+            overflow: hidden;
         }
-    })();
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(-10px); }
+            100% { transform: translateY(110vh) translateX(10px); }
+        }
+    `;
+    
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(css));
+    document.head.appendChild(style);
+
+    // 2. Tạo container chứa tuyết
+    var snowContainer = document.createElement('div');
+    snowContainer.className = 'snow-container';
+    document.body.appendChild(snowContainer);
+
+    // 3. Tạo tuyết rơi
+    // --- SỬA SỐ NÀY ĐỂ TĂNG GIẢM TUYẾT ---
+    var totalSnowflakes = 100; // Để 100 là mượt nhất, không bị lag web
+    // -------------------------------------
+
+    for (var i = 0; i < totalSnowflakes; i++) {
+        var snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        
+        // Random vị trí ngang
+        snowflake.style.left = Math.random() * 100 + '%';
+        
+        // Random tốc độ rơi (từ 5s đến 10s)
+        var duration = Math.random() * 5 + 5 + 's';
+        snowflake.style.animationDuration = duration;
+        
+        // Random thời gian trễ (để không rơi cục bộ)
+        snowflake.style.animationDelay = Math.random() * 5 + 's';
+        
+        // Random độ mờ
+        snowflake.style.opacity = Math.random(); 
+        
+        // Random kích thước (2px - 6px)
+        var size = Math.random() * 4 + 2 + 'px';
+        snowflake.style.width = size;
+        snowflake.style.height = size;
+
+        snowContainer.appendChild(snowflake);
+    }
+})();
+
 })();
